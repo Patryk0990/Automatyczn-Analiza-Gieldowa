@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid content p-5 me-0">
+    <h2 class="font-weight-bold">User list</h2>
+    <table>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Privilege level
+            </th>
+            <th>
+                Account status
+            </th>
+            <th>
+                Modify
+            </th>
+            <th>Delete</th>
+        </tr>
+        {% for u in users %}
+            <tr>
+                <td>
+                    {{ u.id }}
+                </td>
+                <td>
+                    {{ u.username }}
+                </td>
+                <td>
+                    {{ u.permission_level }}
+                </td>
+                <td>
+                    {% if u.active %}
+                        <span class="material-icons">check</span>
+                    {% else %}
+                        <span class="material-icons">close</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('modify_user', id=u.id) }}"><span class="material-icons">mode_edit</span></a>
+                </td>
+                <td>
+                    <a href="{{ url_for('delete_user', id=u.id) }}"><span class="material-icons">delete</span></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

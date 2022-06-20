@@ -1,0 +1,94 @@
+<button data-bs-toggle="collapse" href="#sidebar-collapse" role="button" aria-expanded="false" aria-controls="sidebar-collapse" id="sidebar-collapse-button">
+    <img class="logo-mobile" src="/Images/logo.png"><span class="material-icons">menu</span>
+</button>
+<nav class="sidebar d-flex">
+    <div id="sidebar-collapse" class="collapse">
+        <div class="sidebar-header d-flex flex-column justify-content-between align-items-center">
+            <div class="logo-frame d-flex mb-4">
+                <img class="logo" src="/Images/logo.png">
+                <div class="logo-description d-flex flex-column justify-content-center">
+                    <h4 class="m-0">AAG</h4>
+                    <h5 class="m-0">Trading System</h5>
+                </div>
+            </div>
+            <div class="account-stats">
+                <h3>Welcome, {{ user.get_username() }}!</h3>
+            </div>
+        </div>
+        <div id="sidebar-menu">
+            <ul class="sidebar-nav list-unstyled">
+                <li class="nav-item">
+                    <a class="nav-sub-item bigger-font" href="{{ url_for('dashboard') }}"><span class="material-icons">space_dashboard</span>&nbsp; Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-sub-item bigger-font" data-bs-toggle="collapse" href="#sidebarDropdownTrade" role="button" aria-expanded="false" aria-controls="sidebarDropdownTrade">
+                        <span class="material-icons">account_balance</span>&nbsp; Stocks
+                    </a>
+                    <div class="collapse nav-sub-item-content" id="sidebarDropdownTrade">
+                        {% if user.is_superuser() %}
+                        <a class="sub-item" id="update_stocks" href="{{ url_for('update_stocks') }}">
+                            <span class="material-icons">update</span>&nbsp; Update stock symbols
+                        </a>
+                        {% endif %}
+                        <a class="sub-item" href="{{ url_for('view_stocks') }}">
+                            <span class="material-icons">bar_chart</span>&nbsp; Search stocks
+                        </a>
+                        <p class="mt-2 mb-0" id="stocks_response" style="display: none;"></p>
+                    </div>
+                </li>
+                {% if user.is_superuser() %}
+                <li class="nav-item">
+                    <a class="nav-sub-item bigger-font" href="{{ url_for('manage_users') }}"><span class="material-icons">group</span>&nbsp; User Management</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-sub-item bigger-font" data-bs-toggle="collapse" href="#sidebarDropdownSettings" role="button" aria-expanded="false" aria-controls="sidebarDropdownSettings">
+                        <span class="material-icons">settings</span>&nbsp; UI Settings
+                    </a>
+                    <div class="collapse nav-sub-item-content" id="sidebarDropdownSettings">
+                        <div class="sub-item">
+                            <div><span class="material-icons">dark_mode</span>&nbsp; Dark-mode</div>
+                            <div class="settings" id="dark-mode">
+                                <div class="settings-option {% if not ui_settings.dark_mode %}active{% endif %}" data-value=False>Off</div>
+                                <div class="settings-option {% if ui_settings.dark_mode %}active{% endif %}" data-value=True>On</div>
+                            </div>
+                        </div>
+                        <div class="sub-item">
+                            <div><span class="material-icons">palette</span>&nbsp; Theme color</div>
+                            <div class="settings" id="theme-mode">
+                                <div class="settings-option {% if ui_settings.theme_mode == 1 %}active{% endif %}" data-value="1">Green</div>
+                                <div class="settings-option {% if ui_settings.theme_mode == 2 %}active{% endif %}" data-value="2">Violet</div>
+                                <div class="settings-option {% if ui_settings.theme_mode == 3 %}active{% endif %}" data-value="3">Blue</div>
+                                <div class="settings-option {% if ui_settings.theme_mode == 4 %}active{% endif %}" data-value="4">Orange</div>
+                            </div>
+                        </div>
+                        <div class="sub-item">
+                            <div><span class="material-icons">format_size</span>&nbsp; Font size</div>
+                            <div class="settings" id="font-size">
+                                <div class="settings-option {% if ui_settings.font_size == 1 %}active{% endif %}" data-value="1">1</div>
+                                <div class="settings-option {% if ui_settings.font_size == 2 %}active{% endif %}" data-value="2">2</div>
+                                <div class="settings-option {% if ui_settings.font_size == 3 %}active{% endif %}" data-value="3">3</div>
+                            </div>
+                        </div>
+                        <div class="sub-item" style="display: none">
+                            <a class="btn" id="save_settings" style="display: none;" href="{{ url_for('update_user_interface_settings') }}">Save changes</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-sub-item bigger-font" data-bs-toggle="collapse" href="#sidebarDropdownEditAccount" role="button" aria-expanded="false" aria-controls="sidebarDropdownEditAccount">
+                        <span class="material-icons">account_circle</span>&nbsp; Account Management
+                    </a>
+                    <div class="collapse nav-sub-item-content" id="sidebarDropdownEditAccount">
+                        {% if user.is_privileged() %}
+                        <a class="sub-item" href="{{ url_for('change_user_api_settings') }}"><span class="material-icons">manage_accounts</span>&nbsp; Alpaca API Settings</a>
+                        {% endif %}
+                        <a class="sub-item" href="{{ url_for('change_user_password') }}"><span class="material-icons">vpn_key</span>&nbsp; Change password</a>
+                        <a class="sub-item" href="{{ url_for('logout') }}"><span class="material-icons">logout</span>&nbsp; Logout</a>
+                    </div>
+                </li>
+            </ul>
+    
+        </div>
+    </div>
+</nav>

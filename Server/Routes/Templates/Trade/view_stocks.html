@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid content p-5 me-0">
+	<h2 class="font-weight-bold">Stocks</h2>
+	<div class="mt-4 row g-0 w-100 justify-content-center">
+		<div class="col-md-4 pe-md-5" id="stock-select-interval-container">
+			<label for="interval_value">Interval selection</label></br>
+			<input type="number" name="interval_value" min="1" max="59" value="1" class="form-input" id="interval_value" autocomplete="off" onkeyup=checkInputValue(this) style="width: 30%">
+			<select name="interval_unit" id="interval_unit" class="form-input" style="width: 65%">
+				<option value="Minute">Minute</option>
+				<option value="Hour">Hour</option>
+				<option value="Day">Day</option>
+				<option value="Week">Week</option>
+				<option value="Month">Month</option>
+			</select>
+		</div>
+		<div class="col-md-4 ps-md-5" id="stock-select-date-container">
+			<label for="date_value">Start date selection</label></br>
+			<input type="date" name="date_value" class="form-input" id="date_value" autocomplete="off" style="width: 100%">
+		</div>
+		<div class="col-8 text-center" id="stock-select-container">
+			<label for="company">Stock selection</label></br>
+			<input type="text" name="company" maxlength="255" class="form-input" id="company" placeholder="Search stock" autocomplete="off" style="width: 100%">
+			<div id="company-container" style="display: none; box-shadow: 0px 0px 5px 2px rgba(52,58,64,0.25);"></div>
+		</div>
+	</div>
+	<div class="mt-4 row g-0 w-100" id="graph-container">
+		<div id="candles"></div>
+		<div id="datetime-slider"></div>
+	</div>
+	<div class="mt-4 row g-0 w-100 justify-content-center" id="order-container">
+		<p class="text-center" id="market-info-container"></p>
+		<p class="text-center" id="current-stock-price"></p>
+		<p class="text-center" id="predictions-response"></p>
+		{% if u_api_connection_valid %}
+		<p class="text-center" id="orders-response"></p>
+		<div class="col-md-4 pe-md-5" id="sell-container" style="opacity:0">
+			<p class="text-center" id="account-owned-stock-container"></p>
+			<label for="sell_quantity">Number of shares to sell</label></br>
+			<input type="number" name="sell_quantity" min="1" max="100" value="1" class="form-input" id="sell_quantity" onkeyup=checkInputValue(this) style="width: 100%"></br>
+			<div class="btn" id="sell-btn" style="width: 100%">Sell shares</div>
+		</div>
+		<div class="col-md-4 ps-md-5" id="buy-container" style="opacity:0">
+			<p class="text-center" id="account-budget-container"></p>
+			<label for="buy_quantity">Number of shares to buy</label></br>
+			<input type="number" name="buy_quantity" min="1" max="100" value="1" class="form-input" id="buy_quantity" onkeyup=checkInputValue(this) style="width: 100%"></br>
+			<div class="btn" id="buy-btn" style="width: 100%">Buy shares</div>
+		</div>
+		{% endif %}
+	</div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.2/luxon.min.js" integrity="sha512-fcm3tvY+IeBaSiymWo7OJ+UqcY4BgPIDLr87iIys1s9yMmEKvilWMQaPb1s0HZb0M+aT+apZPAVQFrQ8DOYGlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script type="text/javascript" src="/JS/trade.js"></script>
+{% endblock %}

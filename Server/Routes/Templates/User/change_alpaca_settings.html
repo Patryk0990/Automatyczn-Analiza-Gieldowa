@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid content p-5 me-0">
+    <h2 class="font-weight-bold">Alpaca API settings</h2>
+    <form method="POST">
+        <label for="apca_api_key_id">Key ID</label>
+		<input class="form-input" name="apca_api_key_id" id="apca_api_key_id" placeholder="Alpaca API Key Identifier " value ="{% if u_api_settings.apca_api_key_id is not none %}{{ u_api_settings.apca_api_key_id }}{% endif %}" required >
+        <label for="apca_api_secret_key">Secret Key</label>
+		<input class="form-input" name="apca_api_secret_key" id="apca_api_secret_key" placeholder="Alpaca API Secret Key" value ="{% if u_api_settings.apca_api_secret_key is not none %}{{ u_api_settings.apca_api_secret_key }}{% endif %}" required >
+        <input type="submit" class="btn" value="Update settings">
+    </form>
+</div>
+
+{% endblock %}

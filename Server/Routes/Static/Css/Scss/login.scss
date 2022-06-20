@@ -1,0 +1,79 @@
+$dark-blue: #052e5c;
+$navy: #172144;
+$cream-white: #f8f9fa;
+$ivory: #F8F8FF;
+$white: #FFF;
+$lime-green: #91D451;
+$dark: #343a40;
+
+body {
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: $ivory;
+    font-size: 1.1rem;
+
+    a {
+        color: $lime-green !important;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    h1 {
+        color: $lime-green;
+    }
+}
+
+.forms {
+    left: 0;
+    display: flex;
+    background-color: rgba(0,0,0, 0.9);
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+    transition: all .25s ease-in-out;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        .form-control {
+            color: $ivory;
+            background-color: #000;
+            margin-bottom: 1rem;
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover, 
+            &:-webkit-autofill:focus, 
+            &:-webkit-autofill:active  {
+                background-color: $dark !important;
+                transition: background-color 9999s !important;
+                -webkit-text-fill-color: $ivory !important;
+            }
+        }
+        .btn {
+            font-size: 1rem;
+            color: $dark;
+            background-color: $lime-green;
+            border: none !important;
+            box-shadow: none !important;
+            padding: .5rem 1.5rem;
+            margin-top: 1rem;
+            font-weight: bold;
+            &:hover, &:active {
+                color: $lime-green !important;
+                background-color: $dark !important;    
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    /* For mobile phones: */
+    .forms {
+        left: 0 !important;
+        clip-path: none !important;
+    }
+}
+

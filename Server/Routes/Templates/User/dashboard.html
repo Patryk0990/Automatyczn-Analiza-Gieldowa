@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid content p-5 me-0">
+	<div class="mt-4 row g-0 w-100 justify-content-center">
+        {% if user.is_privileged() %}
+            <div class="col-md-6 d-flex flex-column align-items-center">
+            <h3 class="font-weight-bold text-center">Shares held</h3>
+            {% if positions|length > 0 %}
+                <table>
+                    <tr>
+                        <th>
+                            Symbol
+                        </th>
+                        <th>
+                            Entry price / share
+                        </th>
+                        <th>
+                            Current price / share
+                        </th>
+                        <th>
+                            Balance
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                    </tr>
+                    {% for p in positions %}
+                        <tr>
+                            <td class="text-start">
+                                {{ p.symbol }}
+                            </td>
+                            <td class="text-end">
+                                {{ p.entry_price }} $
+                            </td>
+                            <td class="text-end">
+                                {{ p.current_price }} $
+                            </td>
+                            <td class="text-end">
+                                {{ '%0.2f'|format((1 - (p.entry_price|float / p.current_price|float)) * 100) }} %
+                            </td>
+                            <td class="text-end">
+                                {{ p.quantity }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No results</p>
+            {% endif %}
+            </div>
+        {% endif %}
+        <div class="col-md-{% if user.is_privileged() %}6{% else %}12{% endif %} d-flex flex-column align-items-center">
+            <h3 class="font-weight-bold text-center">News</h3>
+            <table>
+                <tr>
+                    <th>
+                        Header
+                    </th>
+                    <th>
+                        Last modification date
+                    </th>
+                    <th>
+                        Post link
+                    </th>
+                </tr>
+                {% for n in news %}
+                    <tr>
+                        <td class="text-start">
+                            {{ n.title }}
+                        </td>
+                        <td class="text-end">
+                            {{ n.update_time }}
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ n.link }}" target="_blank" class="d-flex align-items-center"><span class="material-icons">link</span> Click here</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

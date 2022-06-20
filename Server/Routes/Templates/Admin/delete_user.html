@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid content p-5 me-0">
+    <h2 class="font-weight-bold">Delete user</h2>
+    <hr>
+    <form method="POST">
+        <p class="text-center">Are you sure to delete this user {{ user_to_delete_username }}?</p>
+        <a class="btn" href="{{ url_for('manage_users') }}">Return to user management</a>
+		<input type="submit" class="btn" value="Delete user">
+    </form>
+</div>
+
+{% endblock %}

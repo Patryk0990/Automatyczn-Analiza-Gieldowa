@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid content p-5 me-0">
+    <h2 class="font-weight-bold">User modification</h2>
+    <hr>
+    <form method="POST">
+			<input class="form-input" name="username" placeholder="Username" value ="{{ user_to_modify.username }}" required data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="Username should contain 6-32 characters. Allowed characters are: </br>lowercase and uppercase letters,</br>numbers,</br>special characters (@#$%^&+=!.-_).">
+			<input class="form-input" type="password" name="password" placeholder="New password" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="Password should contain 8-100 characters including at least:</br>1 lower case letter,</br>1 upper case letter,</br>1 number,</br>1 special character (@#$%^&+=!.-_).">
+			<input class="form-input" type="password" name="password_repetition" placeholder="Repeat new password" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+            <label for="permission_level">
+                Select privilege level:
+            </label>
+            <input class="form-input" type="number" id="permission_level" name="permission_level" min="0" max="2" value="{{ user_to_modify.permission_level }}" onkeyup=checkInputValue(this) required data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="0 - User</br>1 - Privileged User</br>2 - Administrator">
+            <div><input class="form-input" type="checkbox" name="active" value="False" {% if not user_to_modify.active %} checked {% endif %}> Account archiving </div>
+			<input type="submit" class="btn" value="Modify user">
+    </form>
+</div>
+
+{% endblock %}
